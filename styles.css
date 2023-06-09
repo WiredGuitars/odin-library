@@ -1,3 +1,19 @@
-body{
+body {
   background-color: aquamarine;
+}
+header,
+h1 {
+  font-size: 20px;
+}
+.main-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+button {
+  background: none;
+  border: none;
+  background-color: rgb(79, 79, 240);
+  padding: 10px;
+  border-radius: 20px;
 }
