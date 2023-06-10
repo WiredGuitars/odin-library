@@ -6,7 +6,10 @@ function Book(title, author, pageNum, readStatus) {
   this.pageNum = parseInt(pageNum);
   this.readStatus = readStatus;
 }
+//constructor function for book creation
+
 const addButton = document.querySelector(".add-book");
+//select the 'Add Book' button
 
 addButton.addEventListener("click", () => {
   const form = document.createElement("form");
@@ -22,10 +25,10 @@ addButton.addEventListener("click", () => {
     <label for="readStatus">Read:</label>
     <input type="checkbox" id="readStatus">
     <button type="submit">Add Book</button>
-    <button type="submit">Remove Book</button>
+    <button type="submit" class="remove-button">Remove Book</button>
   `;
-
-  document.body.appendChild(form);
+  const bookFormSpace = document.querySelector(".book-form-space")
+  bookFormSpace.appendChild(form);
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -46,7 +49,51 @@ addButton.addEventListener("click", () => {
 
     displayBooks();
 
-    // Remove the form after adding the book
     form.remove();
   });
+
+  const removeButton = form.querySelector(".remove-button")
+  removeButton.addEventListener("click", () => {
+    form.remove()
+  })
 });
+//functionality for 'Add Book button.' Basically, when clicked, 'Add Book' creates a variable that 
+//creates a form that is appended to bookFormSpace. An Eventlistener is also created for 
+//the submit/addbook button of the form, and removebook button to either add the book to displayBook
+//or kill the form. 
+
+function displayBooks() {
+  
+  const booksContainer = document.querySelector(".books-container");
+  booksContainer.innerHTML = ""; // Clear previous contents
+
+  myLibrary.forEach((book, index) => {
+    const bookElement = document.createElement("div");
+    bookElement.classList.add("book");
+
+    const titleElement = document.createElement("h3");
+    titleElement.textContent = `Title: ${book.title}`;
+    bookElement.appendChild(titleElement);
+
+    const authorElement = document.createElement("p");
+    authorElement.textContent = `Author: ${book.author}`;
+    bookElement.appendChild(authorElement);
+
+    const pageNumElement = document.createElement("p");
+    pageNumElement.textContent = `Page Numbers: ${book.pageNum}`;
+    bookElement.appendChild(pageNumElement);
+
+    const readStatusElement = document.createElement("p");
+    readStatusElement.textContent = `Read: ${book.readStatus ? "Yes" : "No"}`;
+    bookElement.appendChild(readStatusElement);
+
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove Book";
+    removeButton.addEventListener("click", () => {
+      removeBook(index);
+    });
+    bookElement.appendChild(removeButton);
+
+    booksContainer.appendChild(bookElement);
+  });
+}
