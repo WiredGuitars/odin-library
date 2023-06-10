@@ -17,13 +17,13 @@ button {
   padding: 10px;
   border-radius: 20px;
 }
-.book-form{
+.book-form {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   gap: 20px;
   align-items: center;
 }
-.button-form{
+.button-form {
   gap: 20px;
 }

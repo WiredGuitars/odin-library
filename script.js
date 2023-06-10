@@ -1,17 +1,17 @@
-let myLibrary = []
+let myLibrary = [];
 
-function Book(title, author, pageNum, readStatus){
-  this.title = title
-  this.author = author
-  this.pageNum = parseInt(pageNum)
-  this.readStatus = readStatus 
+function Book(title, author, pageNum, readStatus) {
+  this.title = title;
+  this.author = author;
+  this.pageNum = parseInt(pageNum);
+  this.readStatus = readStatus;
 }
-const addButton = document.querySelector(".add-book")
+const addButton = document.querySelector(".add-book");
 
-addButton.addEventListener('click', () => {
-  const form = document.createElement('form');
-  form.classList.add('book-form');
-  
+addButton.addEventListener("click", () => {
+  const form = document.createElement("form");
+  form.classList.add("book-form");
+
   form.innerHTML = `
     <label for="title">Title:</label>
     <input type="text" id="title" required>
@@ -27,13 +27,13 @@ addButton.addEventListener('click', () => {
 
   document.body.appendChild(form);
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const titleInput = document.getElementById('title');
-    const authorInput = document.getElementById('author');
-    const pageNumInput = document.getElementById('pageNum');
-    const readStatusInput = document.getElementById('readStatus');
+    const titleInput = document.getElementById("title");
+    const authorInput = document.getElementById("author");
+    const pageNumInput = document.getElementById("pageNum");
+    const readStatusInput = document.getElementById("readStatus");
 
     const title = titleInput.value;
     const author = authorInput.value;
