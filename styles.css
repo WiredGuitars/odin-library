@@ -1,5 +1,9 @@
 body {
   background-color: aquamarine;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
 }
 header,
 h1 {
@@ -9,6 +13,7 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 15px;
+  flex: 0 0 auto;
 }
 button {
   background: none;
@@ -16,6 +21,7 @@ button {
   background-color: rgb(79, 79, 240);
   padding: 10px;
   border-radius: 20px;
+  flex: 0 1 auto;
 }
 .book-form {
   display: flex;
@@ -24,10 +30,24 @@ button {
   gap: 20px;
   align-items: center;
 }
+input {
+  border-radius: 7px;
+  border: solid 2px;
+}
 .button-form {
   gap: 20px;
 }
-.books-container{
+.book-form-space {
+  flex: 1;
+}
+.books-container {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.book {
+  border: solid 1px blue;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }

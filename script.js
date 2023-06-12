@@ -1,10 +1,18 @@
 let myLibrary = [];
+//empty array representing our library, to be added to with books
 
 function Book(title, author, pageNum, readStatus) {
   this.title = title;
   this.author = author;
-  this.pageNum = parseInt(pageNum);
+  this.pageNum = pageNum;
   this.readStatus = readStatus;
+  this.removeBook = function () {
+    const index = myLibrary.indexOf(this);
+    if (index !== -1) {
+      myLibrary.splice(index, 1);
+      displayBooks();
+    }
+  };
 }
 //constructor function for book creation
 
@@ -27,7 +35,7 @@ addButton.addEventListener("click", () => {
     <button type="submit">Add Book</button>
     <button type="submit" class="remove-button">Remove Book</button>
   `;
-  const bookFormSpace = document.querySelector(".book-form-space")
+  const bookFormSpace = document.querySelector(".book-form-space");
   bookFormSpace.appendChild(form);
 
   form.addEventListener("submit", (e) => {
@@ -52,20 +60,23 @@ addButton.addEventListener("click", () => {
     form.remove();
   });
 
-  const removeButton = form.querySelector(".remove-button")
+  const removeButton = form.querySelector(".remove-button");
   removeButton.addEventListener("click", () => {
-    form.remove()
-  })
+    form.remove();
+  });
 });
-//functionality for 'Add Book button.' Basically, when clicked, 'Add Book' creates a variable that 
-//creates a form that is appended to bookFormSpace. An Eventlistener is also created for 
+
+//functionality for 'Add Book button.' Basically, when clicked, 'Add Book' creates a variable that
+//creates a form that is appended to bookFormSpace. An Eventlistener is also created for
 //the submit/addbook button of the form, and removebook button to either add the book to displayBook
-//or kill the form. 
+//or kill the form. We prevent the default behavior of submitting a form to an empty server
+//with preventDefault(), where we instead gather the information from the elements within the
+//form by their id, which is established on form creation, and pass them through our constructor
+//function Book.
 
 function displayBooks() {
-  
   const booksContainer = document.querySelector(".books-container");
-  booksContainer.innerHTML = ""; // Clear previous contents
+  booksContainer.innerHTML = "";
 
   myLibrary.forEach((book, index) => {
     const bookElement = document.createElement("div");
@@ -84,16 +95,43 @@ function displayBooks() {
     bookElement.appendChild(pageNumElement);
 
     const readStatusElement = document.createElement("p");
-    readStatusElement.textContent = `Read: ${book.readStatus ? "Yes" : "No"}`;
+    readStatusElement.innerHTML = `Read: <p id="read-status-${index}">${
+      book.readStatus ? "Yes" : "No"
+    }</p>`;
     bookElement.appendChild(readStatusElement);
 
     const removeButton = document.createElement("button");
     removeButton.textContent = "Remove Book";
     removeButton.addEventListener("click", () => {
-      removeBook(index);
+      book.removeBook();
     });
+
+    const readToggle = document.createElement("button");
+    readToggle.textContent = "Toggle Read";
+    readToggle.addEventListener("click", () => {
+      toggleRead(index);
+    });
+
     bookElement.appendChild(removeButton);
+    bookElement.appendChild(readToggle);
 
     booksContainer.appendChild(bookElement);
   });
+
+  function toggleRead(index) {
+    const readStatusElement = document.getElementById(`read-status-${index}`);
+    const currentStatus = readStatusElement.textContent;
+    const newStatus = currentStatus === "Yes" ? "No" : "Yes";
+    readStatusElement.textContent = newStatus;
+  }
 }
+//function to be invoked when a form is submitted from addBook. Basically gets the title, author
+//pageNum, and readStatus from the form. Also added removeBook and toggleRead functions in here
+//These are invoked when their corresponding buttons are clicked, and pass the current form as
+//a parameter through them. In the case of removeBook, it simply splices whichever book it refers
+//to out of myLibrary and runs displayBooks again. I actually realized I could add removeBook
+//to the original constructor function for Book, so in the latest version I did that and just
+// added an eventlistener for it here, where it's invoked when the button is clicked.
+// toggleRead has a few more moving parts; it grabs the readStatusElement by its id (assigned  
+//to it by its current index on form creation) and accesses its text content, changing it
+//
